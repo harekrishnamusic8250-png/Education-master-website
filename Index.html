@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Education Master</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f7f9;color:#202832}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+
+/* LOGIN */
+#loginPage{
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;background:linear-gradient(135deg,#e8fff3,#edf4ff)
+}
+.login{
+ width:100%;max-width:410px;background:#fff;padding:30px;
+ border-radius:20px;box-shadow:0 15px 45px #0002
+}
+.logo{
+ width:70px;height:70px;border-radius:50%;margin:auto;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(135deg,#25c77a,#2879e8);
+ color:#fff;font-weight:bold;font-size:24px
+}
+.login h1{text-align:center;margin-top:15px}
+.login p{text-align:center;color:#88919b;margin:7px 0 25px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:bold;font-size:14px;margin-bottom:6px}
+input,select{
+ width:100%;padding:12px;border:1px solid #dce1e7;
+ border-radius:9px;outline:none;background:#fff
+}
+input:focus,select:focus{border-color:#2bc57a}
+.primary{
+ background:#27bf74;color:#fff;padding:12px 18px;border-radius:9px;
+ width:100%;font-weight:bold
+}
+.error{color:#e74c3c;text-align:center;margin-top:10px}
+
+/* APP */
+#app{display:none}
+.top{
+ height:68px;background:#fff;border-bottom:1px solid #e6e9ed;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 18px;position:sticky;top:0;z-index:20
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:bold}
+.brandLogo{
+ width:40px;height:40px;border-radius:50%;background:#27bf74;
+ color:#fff;display:flex;align-items:center;justify-content:center
+}
+.menu{font-size:25px;margin-right:12px}
+.topRight{display:flex;align-items:center;gap:10px}
+.logout{background:#ef5350;color:#fff;padding:8px 12px;border-radius:7px}
+
+/* SIDEBAR */
+.sidebar{
+ position:fixed;z-index:50;top:68px;left:-275px;width:265px;
+ height:calc(100vh - 68px);background:#fff;box-shadow:5px 0 25px #0002;
+ padding:15px;transition:.25s;overflow:auto
+}
+.sidebar.open{left:0}
+.sideProfile{
+ background:linear-gradient(135deg,#25c77a,#2879e8);
+ color:#fff;border-radius:14px;padding:18px;margin-bottom:12px
+}
+.avatar{
+ width:48px;height:48px;background:#fff;color:#20ae69;
+ border-radius:50%;display:flex;align-items:center;
+ justify-content:center;font-weight:bold;margin-bottom:9px
+}
+.nav{
+ padding:12px;border-radius:8px;margin:4px 0;
+ color:#45505b;font-weight:bold
+}
+.nav:hover,.nav.active{background:#e8faf1;color:#159d5c}
+.overlay{
+ display:none;position:fixed;inset:0;background:#0005;z-index:40
+}
+.overlay.show{display:block}
+
+/* CONTENT */
+.content{max-width:1150px;margin:auto;padding:20px}
+.page{display:none}
+.page.active{display:block}
+.heading{margin-bottom:18px}
+.heading h2{font-size:24px}
+.heading p{color:#7d8791;margin-top:5px}
+
+.stats{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px
+}
+.card{
+ background:#fff;border-radius:14px;padding:18px;
+ box-shadow:0 3px 14px #0000000a;margin-bottom:18px
+}
+.statTitle{color:#7f8993;font-size:13px}
+.statValue{font-size:24px;font-weight:bold;margin-top:8px}
+.green{color:#1daf68}
+.blue{color:#2778df}
+.red{color:#e44c4c}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.info{
+ display:flex;justify-content:space-between;
+ padding:13px 0;border-bottom:1px solid #edf0f3
+}
+.info:last-child{border-bottom:0}
+.muted{color:#7f8993}
+.badge{
+ display:inline-block;padding:5px 9px;border-radius:20px;
+ background:#e7faf0;color:#159d5c;font-size:12px;font-weight:bold
+}
+
+.bigNumber{text-align:center;font-size:40px;font-weight:bold;color:#22b66d}
+.center{text-align:center}
+
+.progress{height:10px;background:#e8edf1;border-radius:10px;overflow:hidden}
+.progress div{height:100%;background:#28c078;width:35%}
+
+.actions{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+}
+.action{
+ padding:13px;background:#f1faf5;border-radius:9px;
+ text-align:center;color:#159d5c;font-weight:bold
+}
+
+.formGrid{
+ display:grid;grid-template-columns:1fr 1fr;gap:14px
+}
+.full{grid-column:1/-1}
+
+table{width:100%;border-collapse:collapse}
+th,td{
+ padding:12px;border-bottom:1px solid #edf0f3;
+ text-align:left;white-space:nowrap
+}
+th{color:#7f8993;font-size:13px}
+.tableWrap{overflow:auto}
+
+.btn{
+ padding:10px 15px;border-radius:8px;font-weight:bold
+}
+.btnGreen{background:#27bf74;color:#fff}
+.btnBlue{background:#2879e8;color:#fff}
+.btnRed{background:#ef5350;color:#fff}
+.btnGray{background:#eef1f4;color:#39434d}
+
+.notice{
+ padding:12px;border-radius:9px;background:#fff8df;
+ color:#7c6500;font-size:13px;margin-bottom:15px
+}
+
+.toast{
+ position:fixed;left:50%;bottom:25px;z-index:100;
+ transform:translate(-50%,100px);background:#202832;color:#fff;
+ padding:12px 18px;border-radius:8px;transition:.25s
+}
+.toast.show{transform:translate(-50%,0)}
+
+@media(max-width:850px){
+ .stats{grid-template-columns:1fr 1fr}
+ .grid2{grid-template-columns:1fr}
+ .grid3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:550px){
+ .content{padding:12px}
+ .stats{gap:9px}
+ .card{padding:14px}
+ .statValue{font-size:20px}
+ .formGrid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .grid3,.actions{grid-template-columns:1fr}
+ .top{padding:0 12px}
+ .brand{font-size:15px}
+ .logout{padding:7px 9px;font-size:12px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+<div class="login">
+
+ <div class="logo">EM</div>
+ <h1>Education Master</h1>
+ <p>Member Business Portal</p>
+
+ <div class="field">
+  <label>Login ID</label>
+  <input id="loginId" placeholder="Enter any Login ID">
+ </div>
+
+ <div class="field">
+  <label>Password</label>
+  <input id="loginPass" type="password" placeholder="Enter any password">
+ </div>
+
+ <button class="primary" onclick="login()">LOGIN</button>
+
+ <div id="loginError" class="error hidden">
+  Please enter Login ID and Password.
+ </div>
+
+</div>
+</div>
+
+
+<!-- APP -->
+<div id="app">
+
+<header class="top">
+
+ <div class="brand">
+  <div class="brandLogo">EM</div>
+  <span>Education Master</span>
+ </div>
+
+ <div class="topRight">
+  <button class="logout" onclick="logout()">Logout</button>
+  <span class="menu" onclick="openMenu()">☰</span>
+ </div>
+
+</header>
+
+
+<aside id="sidebar" class="sidebar">
+
+ <div class="sideProfile">
+  <div class="avatar" id="avatar">EM</div>
+  <b id="sideName">Member</b>
+  <small id="sideId">Member ID</small>
+ </div>
+
+ <div class="nav active" onclick="page('dashboard',this)">🏠 Dashboard</div>
+ <div class="nav" onclick="page('profile',this)">👤 My Profile</div>
+ <div class="nav" onclick="page('team',this)">👥 My Team</div>
+ <div class="nav" onclick="page('addMember',this)">➕ Add Member</div>
+ <div class="nav" onclick="page('income',this)">💰 Income</div>
+ <div class="nav" onclick="page('wallet',this)">💳 Wallet</div>
+ <div class="nav" onclick="page('withdraw',this)">🏦 Withdrawal</div>
+ <div class="nav" onclick="page('courses',this)">🎓 Courses</div>
+ <div class="nav" onclick="page('settings',this)">⚙️ Settings</div>
+ <div class="nav" onclick="logout()">🚪 Logout</div>
+
+</aside>
+
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+
+<main class="content">
+
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+
+ <div class="heading">
+  <h2>Welcome, <span class="welcomeName"></span> 👋</h2>
+  <p>Education Master business dashboard</p>
+ </div>
+
+ <div class="stats">
+
+  <div class="card">
+   <div class="statTitle">Total Income</div>
+   <div class="statValue green">₹<span id="totalIncome">0</span></div>
+  </div>
+
+  <div class="card">
+   <div class="statTitle">Direct Income</div>
+   <div class="statValue">₹<span id="directIncome">0</span></div>
+  </div>
+
+  <div class="card">
+   <div class="statTitle">Pair Income</div>
+   <div class="statValue blue">₹<span id="pairIncome">0</span></div>
+  </div>
+
+  <div class="card">
+   <div class="statTitle">Team Members</div>
+   <div class="statValue"><span id="teamCount">0</span></div>
+  </div>
+
+ </div>
+
+
+ <div class="grid2">
+
+  <div class="card">
+   <h3>Income Overview</h3><br>
+
+   <div class="info">
+    <span>Direct Income</span>
+    <b>₹<span id="d1">0</span></b>
+   </div>
+
+   <div class="info">
+    <span>Pair Income</span>
+    <b>₹<span id="p1">0</span></b>
+   </div>
+
+   <div class="info">
+    <span>Course Income</span>
+    <b>₹<span id="c1">0</span></b>
+   </div>
+
+  </div>
+
+
+  <div class="card">
+   <h3>Account Status</h3><br>
+
+   <div class="info">
+    <span class="muted">Member ID</span>
+    <b id="dashId"></b>
+   </div>
+
+   <div class="info">
+    <span class="muted">Status</span>
+    <span class="badge">Active</span>
+   </div>
+
+   <div class="info">
+    <span class="muted">Package</span>
+    <b>Education Master</b>
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="card">
+  <h3>Quick Actions</h3><br>
+
+  <div class="actions">
+   <button class="action" onclick="page('addMember')">➕ Add Member</button>
+   <button class="action" onclick="page('team')">👥 View Team</button>
+   <button class="action" onclick="page('withdraw')">💳 Withdraw</button>
+  </div>
+ </div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+
+ <div class="heading">
+  <h2>My Profile</h2>
+  <p>Your member information</p>
+ </div>
+
+ <div class="card">
+
+  <div class="info">
+   <span class="muted">Login ID</span>
+   <b id="profileId"></b>
+  </div>
+
+  <div class="info">
+   <span class="muted">Name</span>
+   <b id="profileName"></b>
+  </div>
+
+  <div class="info">
+   <span class="muted">Email</span>
+   <b id="profileEmail">Not added</b>
+  </div>
+
+  <div class="info">
+   <span class="muted">Phone</span>
+   <b id="profilePhone">Not added</b>
+  </div>
+
+  <div class="info">
+   <span class="muted">Status</span>
+   <span class="badge">Active</span>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- TEAM -->
+<section id="team" class="page">
+
+ <div class="heading">
+  <h2>My Team</h2>
+  <p>Left and right team members</p>
+ </div>
+
+ <div class="grid3">
+
+  <div class="card center">
+   <span class="muted">Left Team</span>
+   <div class="bigNumber" id="leftCount">0</div>
+  </div>
+
+  <div class="card center">
+   <span class="muted">Total Team</span>
+   <div class="bigNumber" id="totalTeam">0</div>
+  </div>
+
+  <div class="card center">
+   <span class="muted">Right Team</span>
+   <div class="bigNumber" id="rightCount">0</div>
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Team Members</h3><br>
+
+  <div class="tableWrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Status</th>
+      <th>Action</th>
+     </tr>
+    </thead>
+
+    <tbody id="teamTable"></tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- ADD MEMBER -->
+<section id="addMember" class="page">
+
+ <div class="heading">
+  <h2>Add New Member</h2>
+  <p>Create a demo team member</p>
+ </div>
+
+ <div class="card">
+
+  <div class="notice">
+   Demo mode: this member is saved only in this browser.
+  </div>
+
+  <div class="formGrid">
+
+   <div class="field">
+    <label>Member Name</label>
+    <input id="newName" placeholder="Enter name">
+   </div>
+
+   <div class="field">
+    <label>Member ID</label>
+    <input id="newId" placeholder="Example: EM1002">
+   </div>
+
+   <div class="field">
+    <label>Phone</label>
+    <input id="newPhone" placeholder="Phone number">
+   </div>
+
+   <div class="field">
+    <label>Email</label>
+    <input id="newEmail" placeholder="Email">
+   </div>
+
+   <div class="field">
+    <label>Position</label>
+    <select id="newPosition">
+     <option value="Left">Left</option>
+     <option value="Right">Right</option>
+    </select>
+   </div>
+
+  </div>
+
+  <button class="btn btnGreen" onclick="addMember()">
+   Save Member
+  </button>
+
+ </div>
+
+</section>
+
+
+<!-- INCOME -->
+<section id="income" class="page">
+
+ <div class="heading">
+  <h2>Income</h2>
+  <p>Demo income records</p>
+ </div>
+
+ <div class="stats">
+
+  <div class="card">
+   <span class="statTitle">Direct</span>
+   <div class="statValue green">₹<span id="incomeDirect">0</span></div>
+  </div>
+
+  <div class="card">
+   <span class="statTitle">Pair</span>
+   <div class="statValue blue">₹<span id="incomePair">0</span></div>
+  </div>
+
+  <div class="card">
+   <span class="statTitle">Course</span>
+   <div class="statValue">₹<span id="incomeCourse">0</span></div>
+  </div>
+
+  <div class="card">
+   <span class="statTitle">Total</span>
+   <div class="statValue green">₹<span id="incomeTotal">0</span></div>
+  </div>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Income History</h3><br>
+
+  <div class="tableWrap">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Status</th>
+     </tr>
+    </thead>
+
+    <tbody id="incomeTable">
+
+     <tr>
+      <td>Today</td>
+      <td>Direct Income</td>
+      <td>₹0</td>
+      <td><span class="badge">Demo</span></td>
+     </tr>
+
+    </tbody>
+
+   </table>
+
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- WALLET -->
+<section id="wallet" class="page">
+
+ <div class="heading">
+  <h2>Wallet</h2>
+  <p>Demo wallet management</p>
+ </div>
+
+ <div class="grid3">
+
+  <div class="card center">
+   <span class="muted">Available Fund</span>
+   <div class="bigNumber">₹<span id="walletBalance">0</span></div>
+  </div>
+
+  <div class="card center">
+   <span class="muted">Total Income</span>
+   <div class="bigNumber">₹<span id="walletIncome">0</span></div>
+  </div>
+
+  <div class="card center">
+   <span class="muted">Withdrawn</span>
+   <div class="bigNumber">₹<span id="walletWithdrawn">0</span></div>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- WITHDRAW -->
+<section id="withdraw" class="page">
+
+ <div class="heading">
+  <h2>Withdrawal</h2>
+  <p>Demo withdrawal request</p>
+ </div>
+
+ <div class="card">
+
+  <div class="notice">
+   This is a demo. No real money is transferred.
+  </div>
+
+  <div class="field">
+   <label>Amount</label>
+   <input id="withdrawAmount" type="number" placeholder="Enter amount">
+  </div>
+
+  <div class="field">
+   <label>Payment Method</label>
+   <select id="withdrawMethod">
+    <option>Bank Account</option>
+    <option>UPI</option>
+   </select>
+  </div>
+
+  <button class="btn btnGreen" onclick="withdraw()">
+   Submit Withdrawal
+  </button>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Withdrawal History</h3><br>
+
+  <div class="tableWrap">
+   <table>
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Method</th>
+      <th>Status</th>
+     </tr>
+    </thead>
+    <tbody id="withdrawTable"></tbody>
+   </table>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- COURSES -->
+<section id="courses" class="page">
+
+ <div class="heading">
+  <h2>Education Courses</h2>
+  <p>Demo course catalogue</p>
+ </div>
+
+ <div class="grid2">
+
+  <div class="card">
+   <h3>Digital Skills</h3>
+   <p class="muted">Basic digital learning program.</p>
+   <br>
+   <b>₹499</b>
+   <br>
+   <button class="btn btnBlue" onclick="buyCourse('Digital Skills',499)">
+    Select Course
+   </button>
+  </div>
+
+  <div class="card">
+   <h3>Advanced Skills</h3>
+   <p class="muted">Advanced education program.</p>
+   <br>
+   <b>₹999</b>
+   <br>
+   <button class="btn btnBlue" onclick="buyCourse('Advanced Skills',999)">
+    Select Course
+   </button>
+  </div>
+
+  <div class="card">
+   <h3>Professional Program</h3>
+   <p class="muted">Professional learning package.</p>
+   <br>
+   <b>₹1,999</b>
+   <br>
+   <button class="btn btnBlue" onclick="buyCourse('Professional Program',1999)">
+    Select Course
+   </button>
+  </div>
+
+  <div class="card">
+   <h3>Master Program</h3>
+   <p class="muted">Complete education program.</p>
+   <br>
+   <b>₹2,999</b>
+   <br>
+   <button class="btn btnBlue" onclick="buyCourse('Master Program',2999)">
+    Select Course
+   </button>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+
+ <div class="heading">
+  <h2>Settings</h2>
+  <p>Update your demo profile</p>
+ </div>
+
+ <div class="card">
+
+  <div class="field">
+   <label>Name</label>
+   <input id="settingName">
+  </div>
+
+  <div class="field">
+   <label>Email</label>
+   <input id="settingEmail">
+  </div>
+
+  <div class="field">
+   <label>Phone</label>
+   <input id="settingPhone">
+  </div>
+
+  <button class="btn btnGreen" onclick="saveSettings()">
+   Save Changes
+  </button>
+
+ </div>
+
+</section>
+
+</main>
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+/* ---------- DATA ---------- */
+
+let data = JSON.parse(localStorage.getItem("educationMasterData")) || {
+ user:{
+  id:"",
+  name:"",
+  email:"",
+  phone:""
+ },
+ members:[],
+ income:{
+  direct:0,
+  pair:0,
+  course:0
+ },
+ withdrawals:[]
+};
+
+function save(){
+ localStorage.setItem("educationMasterData",JSON.stringify(data));
+}
+
+
+/* ---------- LOGIN ---------- */
+
+function login(){
+
+ let id=document.getElementById("loginId").value.trim();
+ let pass=document.getElementById("loginPass").value.trim();
+
+ if(!id || !pass){
+  document.getElementById("loginError").classList.remove("hidden");
+  return;
+ }
+
+ document.getElementById("loginError").classList.add("hidden");
+
+ if(!data.user.id){
+  data.user.id=id;
+  data.user.name=id;
+  save();
+ }
+
+ localStorage.setItem("educationMasterLogged","yes");
+
+ showApp();
+}
+
+
+/* ---------- START ---------- */
+
+function showApp(){
+
+ document.getElementById("loginPage").style.display="none";
+ document.getElementById("app").style.display="block";
+
+ updateAll();
+}
+
+
+if(localStorage.getItem("educationMasterLogged")==="yes"){
+ showApp();
+}
+
+
+/* ---------- LOGOUT ---------- */
+
+function logout(){
+
+ localStorage.removeItem("educationMasterLogged");
+
+ document.getElementById("app").style.display="none";
+ document.getElementById("loginPage").style.display="flex";
+
+}
+
+
+/* ---------- MENU ---------- */
+
+function openMenu(){
+ document.getElementById("sidebar").classList.add("open");
+ document.getElementById("overlay").classList.add("show");
+}
+
+function closeMenu(){
+ document.getElementById("sidebar").classList.remove("open");
+ document.getElementById("overlay").classList.remove("show");
+}
+
+
+/* ---------- PAGE ---------- */
+
+function page(id,el){
+
+ document.querySelectorAll(".page").forEach(x=>{
+  x.classList.remove("active");
+ });
+
+ document.getElementById(id).classList.add("active");
+
+ document.querySelectorAll(".nav").forEach(x=>{
+  x.classList.remove("active");
+ });
+
+ if(el) el.classList.add("active");
+
+ closeMenu();
+ window.scrollTo(0,0);
+
+ updateAll();
+}
+
+
+/* ---------- ADD MEMBER ---------- */
+
+function addMember(){
+
+ let name=document.getElementById("newName").value.trim();
+ let id=document.getElementById("newId").value.trim();
+ let phone=document.getElementById("newPhone").value.trim();
+ let email=document.getElementById("newEmail").value.trim();
+ let position=document.getElementById("newPosition").value;
+
+ if(!name || !id){
+  toast("Name and Member ID required");
+  return;
+ }
+
+ if(data.members.some(x=>x.id===id)){
+  toast("Member ID already exists");
+  return;
+ }
+
+ data.members.push({
+  id:id,
+  name:name,
+  phone:phone,
+  email:email,
+  position:position,
+  status:"Active"
+ });
+
+ save();
+
+ document.getElementById("newName").value="";
+ document.getElementById("newId").value="";
+ document.getElementById("newPhone").value="";
+ document.getElementById("newEmail").value="";
+
+ toast("Member added successfully");
+
+ updateAll();
+}
+
+
+/* ---------- DELETE MEMBER ---------- */
+
+function deleteMember(index){
+
+ if(confirm("Delete this demo member?")){
+
+  data.members.splice(index,1);
+  save();
+  updateAll();
+  toast("Member deleted");
+
+ }
+
+}
+
+
+/* ---------- COURSE ---------- */
+
+function buyCourse(name,amount){
+
+ if(confirm("Select "+name+" for ₹"+amount+"?")){
+
+  data.income.course += amount;
+  save();
+  updateAll();
+
+  toast(name+" selected successfully");
+
+ }
+
+}
+
+
+/* ---------- WITHDRAW ---------- */
+
+function withdraw(){
+
+ let amount=Number(
+  document.getElementById("withdrawAmount").value
+ );
+
+ let balance=totalIncome()-totalWithdrawn();
+
+ if(!amount || amount<=0){
+  toast("Enter a valid amount");
+  return;
+ }
+
+ if(amount>balance){
+  toast("Insufficient demo balance");
+  return;
+ }
+
+ data.withdrawals.push({
+  date:new Date().toLocaleDateString(),
+  amount:amount,
+  method:document.getElementById("withdrawMethod").value,
+  status:"Pending"
+ });
+
+ save();
+
+ document.getElementById("withdrawAmount").value="";
+
+ toast("Withdrawal request created");
+
+ updateAll();
+}
+
+
+/* ---------- SETTINGS ---------- */
+
+function saveSettings(){
+
+ data.user.name=document.getElementById("settingName").value.trim() || data.user.id;
+ data.user.email=document.getElementById("settingEmail").value.trim();
+ data.user.phone=document.getElementById("settingPhone").value.trim();
+
+ save();
+ updateAll();
+
+ toast("Profile updated");
+
+}
+
+
+/* ---------- TOTALS ---------- */
+
+function totalIncome(){
+
+ return Number(data.income.direct)+
+        Number(data.income.pair)+
+        Number(data.income.course);
+
+}
+
+function totalWithdrawn(){
+
+ return data.withdrawals.reduce((sum,x)=>sum+Number(x.amount),0);
+
+}
+
+
+/* ---------- UPDATE UI ---------- */
+
+function updateAll(){
+
+ let total=totalIncome();
+
+ document.querySelectorAll(".welcomeName").forEach(x=>{
+  x.innerText=data.user.name || data.user.id;
+ });
+
+ document.getElementById("sideName").innerText=
+  data.user.name || data.user.id;
+
+ document.getElementById("sideId").innerText=
+  "ID: "+data.user.id;
+
+ document.getElementById("avatar").innerText=
+  (data.user.name || data.user.id).substring(0,2).toUpperCase();
+
+ document.getElementById("dashId").innerText=data.user.id;
+
+ document.getElementById("profileId").innerText=data.user.id;
+ document.getElementById("profileName").innerText=data.user.name || data.user.id;
+
+ document.getElementById("totalIncome").innerText=total;
+ document.getElementById("directIncome").innerText=data.income.direct;
+ document.getElementById("pairIncome").innerText=data.income.pair;
+
+ document.getElementById("teamCount").innerText=data.members.length;
+
+ document.getElementById("d1").innerText=data.income.direct;
+ document.getElementById("p1").innerText=data.income.pair;
+ document.getElementById("c1").innerText=data.income.course;
+
+ document.getElementById("incomeDirect").innerText=data.income.direct;
+ document.getElementById("incomePair").innerText=data.income.pair;
+ document.getElementById("incomeCourse").innerText=data.income.course;
+ document.getElementById("incomeTotal").innerText=total;
+
+ let left=data.members.filter(x=>x.position==="Left").length;
+ let right=data.members.filter(x=>x.position==="Right").length;
+
+ document.getElementById("leftCount").innerText=left;
+ document.getElementById("rightCount").innerText=right;
+ document.getElementById("totalTeam").innerText=data.members.length;
+
+ document.getElementById("walletBalance").innerText=
+  total-totalWithdrawn();
+
+ document.getElementById("walletIncome").innerText=total;
+ document.getElementById("walletWithdrawn").innerText=totalWithdrawn();
+
+ document.getElementById("profileEmail").innerText=
+  data.user.email || "Not added";
+
+ document.getElementById("profilePhone").innerText=
+  data.user.phone || "Not added";
+
+ document.getElementById("settingName").value=
+  data.user.name || "";
+
+ document.getElementById("settingEmail").value=
+  data.user.email || "";
+
+ document.getElementById("settingPhone").value=
+  data.user.phone || "";
+
+ renderMembers();
+ renderWithdrawals();
+
+}
+
+
+/* ---------- TEAM TABLE ---------- */
+
+function renderMembers(){
+
+ let html="";
+
+ if(data.members.length===0){
+
+  html=`
+   <tr>
+    <td colspan="5" style="text-align:center">
+     No team members yet
+    </td>
+   </tr>
+  `;
+
+ }else{
+
+  data.members.forEach((m,i)=>{
+
+   html+=`
+    <tr>
+     <td>${escapeHTML(m.id)}</td>
+     <td>${escapeHTML(m.name)}</td>
+     <td>${m.position}</td>
+     <td><span class="badge">${m.status}</span></td>
+     <td>
+      <button class="btn btnRed"
+       onclick="deleteMember(${i})">
+       Delete
+      </button>
+     </td>
+    </tr>
+   `;
+
+  });
+
+ }
+
+ document.getElementById("teamTable").innerHTML=html;
+
+}
+
+
+/* ---------- WITHDRAW TABLE ---------- */
+
+function renderWithdrawals(){
+
+ let html="";
+
+ if(data.withdrawals.length===0){
+
+  html=`
+   <tr>
+    <td colspan="4" style="text-align:center">
+     No withdrawal requests
+    </td>
+   </tr>
+  `;
+
+ }else{
+
+  data.withdrawals.forEach(x=>{
+
+   html+=`
+    <tr>
+     <td>${x.date}</td>
+     <td>₹${x.amount}</td>
+     <td>${x.method}</td>
+     <td><span class="badge">${x.status}</span></td>
+    </tr>
+   `;
+
+  });
+
+ }
+
+ document.getElementById("withdrawTable").innerHTML=html;
+
+}
+
+
+/* ---------- SAFE TEXT ---------- */
+
+function escapeHTML(text){
+
+ return String(text)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+/* ---------- TOAST ---------- */
+
+function toast(message){
+
+ let t=document.getElementById("toast");
+
+ t.innerText=message;
+ t.classList.add("show");
+
+ setTimeout(()=>{
+  t.classList.remove("show");
+ },2200);
+
+}
+</script>
+
+</body>
+  </html>
